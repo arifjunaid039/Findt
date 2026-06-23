@@ -1,0 +1,144 @@
+/* About Page */
+
+.about-container{
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 0px;
+    padding: 100px 0 50px;
+}
+
+.about-heading{
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.about-heading h1{
+    font-size: 3rem;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+/* Dark Mode */
+
+body.dark .about-heading h1{
+    color: #ffffff;
+}
+
+body.dark .about-heading p{
+    color: #cbd5e1;
+}
+
+body.dark .about-text h2{
+    color: #ffffff;
+}
+
+body.dark .about-text p{
+    color: #d1d5db;
+}
+
+.about-heading p{
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.about-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    margin: 100px 0;
+}
+
+.about-section.reverse{
+    flex-direction: row-reverse;
+}
+
+.about-text{
+    flex: 1;
+}
+
+.about-text h2{
+    font-size: 2.2rem;
+    color: #1e293b;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.about-text h2::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 70px;
+    height: 4px;
+    background: #2563eb;
+    border-radius: 10px;
+}
+
+.about-text p{
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: #475569;
+    margin-top: 25px;
+}
+
+.about-image{
+    flex: 1;
+}
+
+.about-image img{
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    transition: 0.4s;
+}
+
+.about-image img:hover{
+    transform: translateY(-10px);
+}
+
+.stats{
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 25px;
+}
+
+.stat-box{
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.stat-box h3{
+    color: #2563eb;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.stat-box p{
+    color: #64748b;
+}
+
+@media(max-width:768px){
+
+    .about-section,
+    .about-section.reverse{
+        flex-direction: column;
+    }
+
+    .stats{
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .about-heading h1{
+        font-size: 2.2rem;
+    }
+
+    .about-text h2{
+        font-size: 1.8rem;
+    }
+}

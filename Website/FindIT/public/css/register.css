@@ -1,148 +1,822 @@
- /* FORM CONTAINER */
+/*==================================================
+    FONTS — Space Grotesk (display/stamp), IBM Plex Mono
+    (tags, data, numerals), Inter (body/reading)
+==================================================*/
 
-.container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+*{
+    box-sizing:border-box;
 }
-    .register-form {
-        width: 100%;
-        max-width: 650px;
-        padding: 40px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(12px);
-        border-radius: 25px;
-        box-shadow:
-            0 15px 35px rgba(0, 0, 0, 0.15),
-            0 5px 15px rgba(0, 0, 0, 0.08);
-        flex-direction: column;
-        gap: 15px;
-    }
 
-    /* TITLE */
-    .register-form h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #0f172a;
-        font-size: 2rem;
-        font-weight: 700;
-    }
+/*==================================================
+    TOKENS — "Registry Ticket": a lost & found intake
+    counter, now in a blue / white palette.
+==================================================*/
 
-    /* INPUT GROUP */
-    .input-group {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin-bottom: 15px;
-    }
+:root{
+    --paper:#F3F6FC;
+    --paper-deep:#E7ECF7;
+    --card:#FFFFFF;
+    --ink:#0F172A;
+    --slate:#64748B;
+    --line:#DCE3F0;
 
-    .input-group label {
-        margin-bottom: 6px;
-        color: #334155;
-        font-weight: 600;
-        font-size: 14px;
-    }
+    --teal:#2563EB;
+    --teal-deep:#1D4ED8;
+    --teal-tint:#DBEAFE;
 
-    /* INPUT FIELDS */
-    .input-group input,
-    .input-group textarea,
-    .input-group select {
-        width: 100%;
-        padding: 14px 16px;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        font-size: 15px;
-        transition: 0.3s ease;
-        background: #fff;
-    }
+    --brass:#38BDF8;
+    --brass-deep:#0284C7;
+    --brass-tint:#E0F2FE;
 
-    .input-group textarea {
-        resize: none;
-    }
+    --stamp:#DC2626;
+    --stamp-deep:#B91C1C;
+    --stamp-tint:#FEE2E2;
 
-    /* FOCUS EFFECT */
-    .input-group input:focus,
-    .input-group textarea:focus,
-    .input-group select:focus {
-        outline: none;
-        border-color: #2563eb;
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-    }
+    --ease:cubic-bezier(.22,1,.36,1);
+    --radius-card:26px;
+}
 
-    /* FILE INPUT */
-    .input-group input[type="file"] {
-        padding: 10px;
-        cursor: pointer;
-    }
+body{
+    font-family:'Inter','Segoe UI',sans-serif;
+    color:var(--ink);
+    background:
+        radial-gradient(circle at 12% 8%,rgba(37,99,235,0.07),transparent 45%),
+        radial-gradient(circle at 88% 92%,rgba(56,189,248,0.08),transparent 45%),
+        var(--paper);
+    transition:background .3s ease,color .3s ease;
+}
 
-    /* BUTTON */
-    button {
-        width: 100%;
-        padding: 15px;
-        border: none;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        color: white;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.3s ease;
-        margin-top: 10px;
-    }
+/* faint ledger-paper texture */
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        repeating-linear-gradient(180deg,rgba(15,23,42,0.02) 0px,rgba(15,23,42,0.02) 1px,transparent 1px,transparent 34px);
+    z-index:0;
+}
 
-    button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
-    }
+/* CONTAINER */
+.container{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:56px 20px;
+    position:relative;
+    z-index:1;
+}
 
-    button:active {
-        transform: translateY(0);
-    }
+.register-form{
+    width:100%;
+    max-width:640px;
+    background:var(--card);
+    border-radius:var(--radius-card);
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.6) inset,
+        0 22px 50px -18px rgba(15,23,42,.16),
+        0 3px 10px rgba(15,23,42,.04);
+    border:1px solid rgba(15,23,42,.06);
+    overflow:hidden;
+    animation:ticketRise .6s var(--ease) both;
+}
 
-    /* CONDITIONAL SECTIONS */
-    #memberFields,
-    #leaderFields {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        padding: 20px;
-        border-radius: 15px;
-        margin-top: 15px;
-    }
+@keyframes ticketRise{
+    from{ opacity:0; transform:translateY(16px) scale(.99); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+}
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-        .register-form {
-            padding: 25px;
-        }
+/*==================================================
+    TICKET HEADER — the signature element. A stamped
+    intake-counter band with a scalloped tear edge.
+==================================================*/
 
-        .register-form h2 {
-            font-size: 1.6rem;
-        }
-    }
+.ticket-head{
+    position:relative;
+    background:
+        radial-gradient(circle at 30% -10%,rgba(255,255,255,.16),transparent 55%),
+        linear-gradient(135deg,var(--teal),var(--teal-deep));
+    padding:34px 40px 30px;
+    text-align:center;
+    color:#F3F7FF;
+}
 
-    .alert-danger{
-background:#ffe5e5;
-color:#d10000;
-padding:12px;
-border-radius:8px;
-margin-bottom:15px;
+.ticket-head .stamp-seal{
+    width:64px;
+    height:64px;
+    margin:0 auto 14px;
+    border-radius:50%;
+    background:var(--card);
+    padding:5px;
+    box-shadow:
+        0 0 0 2px var(--brass),
+        0 0 0 5px rgba(255,255,255,.2),
+        0 10px 22px rgba(0,0,0,.2);
+}
+
+.ticket-head .stamp-seal img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+}
+
+.ticket-head .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.75);
+    margin-bottom:8px;
+}
+
+.ticket-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.9rem;
+    font-weight:700;
+    letter-spacing:-.01em;
+    margin:0 0 6px;
+    color:#fff;
+}
+
+.ticket-head .form-subtitle{
+    font-size:13.5px;
+    color:rgba(255,255,255,.82);
+    max-width:380px;
+    margin:0 auto;
+    line-height:1.6;
+}
+
+/* scalloped tear — punches paper-colored half-circles into
+   the base of the blue band, like a ticket stub perforation */
+.ticket-head::after{
+    content:'';
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:-1px;
+    height:14px;
+    background-image:radial-gradient(circle at 10px 0,var(--card) 9px,transparent 9.5px);
+    background-size:20px 14px;
+    background-repeat:repeat-x;
+}
+
+.ticket-body{
+    padding:8px 40px 40px;
+}
+
+/* FORM subtitle used outside header (kept for compatibility) */
+.form-subtitle{
+    text-align:center;
+    color:var(--slate);
+    font-size:14px;
+}
+
+/*==================================================
+    SECTION TAGS — numbered intake steps.
+==================================================*/
+
+.reg-tag{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    margin:32px 0 18px;
+}
+
+.reg-tag:first-of-type{
+    margin-top:0;
+}
+
+.reg-tag__num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--card);
+    background:var(--ink);
+    padding:3px 7px;
+    border-radius:4px;
+    letter-spacing:.03em;
+    flex-shrink:0;
+}
+
+.reg-tag__text{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--slate);
+    white-space:nowrap;
+}
+
+.reg-tag::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:repeating-linear-gradient(90deg,var(--line) 0,var(--line) 4px,transparent 4px,transparent 8px);
+}
+
+/* keep old .section-label selector mapped for safety */
+.section-label{
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin:28px 0 16px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+/* INTRO BANNER */
+.intro-banner{
+    color:var(--teal-deep);
+    font-size:14px;
+    font-weight:500;
+    margin-bottom:26px;
+    line-height:1.65;
+    background:var(--teal-tint);
+    padding:15px 17px;
+    border-radius:12px;
+    border-left:3px solid var(--teal);
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+}
+
+.intro-banner i{
+    color:var(--teal);
+    margin-top:2px;
+}
+
+/* ROW LAYOUT */
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+/* INPUT GROUP */
+.input-group{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    margin-bottom:16px;
+}
+
+.input-group label{
+    margin-bottom:7px;
+    color:var(--ink);
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:.01em;
+}
+
+.hint{
+    font-size:12px;
+    color:#94a3b8;
+    margin-top:6px;
+}
+
+/* INPUT WRAP + ICON CHIPS */
+.input-wrap{
+    position:relative;
+}
+
+.input-wrap .icon-chip{
+    position:absolute;
+    left:8px;
+    top:8px;
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    pointer-events:none;
+    transition:transform .25s var(--ease);
+    z-index:1;
+}
+
+.input-wrap .icon-chip.top-align{
+    top:10px;
+}
+
+.icon-name        { background:var(--brass-tint); color:var(--brass-deep); }
+.icon-email        { background:var(--teal-tint); color:var(--teal-deep); }
+.icon-phone        { background:var(--teal-tint); color:var(--teal-deep); }
+.icon-cnic          { background:var(--stamp-tint); color:var(--stamp-deep); }
+.icon-address      { background:var(--brass-tint); color:var(--brass-deep); }
+.icon-lock          { background:var(--teal-tint); color:var(--teal-deep); }
+.icon-lock2        { background:var(--brass-tint); color:var(--brass-deep); }
+.icon-community  { background:var(--brass-tint); color:var(--brass-deep); }
+.icon-category    { background:var(--teal-tint); color:var(--teal-deep); }
+.icon-description{ background:var(--teal-tint); color:var(--teal-deep); }
+.icon-rules        { background:var(--brass-tint); color:var(--brass-deep); }
+.icon-leader        { background:var(--brass-tint); color:var(--brass-deep); }
+.icon-location    { background:var(--stamp-tint); color:var(--stamp-deep); }
+.icon-privacy      { background:var(--brass-tint); color:var(--brass-deep); }
+
+.input-group:focus-within .icon-chip{
+    transform:scale(1.08);
+}
+
+/* INPUT FIELDS */
+.input-group input,
+.input-group textarea,
+.input-group select{
+    width:100%;
+    padding:12px 14px;
+    border:1.5px solid var(--line);
+    border-radius:11px;
+    font-size:14.5px;
+    font-family:inherit;
+    transition:border-color .2s var(--ease),box-shadow .2s var(--ease),background .2s var(--ease);
+    background:#fff;
+    outline:none;
+    color:var(--ink);
+}
+
+.input-wrap input,
+.input-wrap textarea{
+    padding-left:46px;
+}
+
+.input-group textarea{
+    resize:none;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder{
+    color:#94a1b8;
+}
+
+.input-group input:hover,
+.input-group textarea:hover,
+.input-group select:hover{
+    border-color:#b7c4de;
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus{
+    border-color:var(--teal);
+    box-shadow:0 0 0 4px var(--teal-tint);
+    background:#fff;
+}
+
+.input-group input:invalid:not(:placeholder-shown){
+    border-color:var(--brass);
+}
+
+/* monospace treatment for identifiers — CNIC, phone */
+#cnic,
+#phone{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:.03em;
+}
+
+/* CNIC availability note */
+.cnic-check-msg{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px !important;
+    letter-spacing:.02em;
+}
+
+/* PASSWORD TOGGLE */
+.password-wrap{
+    position:relative;
+}
+
+.password-wrap input{
+    padding-right:44px;
+}
+
+.password-wrap .toggle-pass{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:#93a1bd;
+    cursor:pointer;
+    font-size:15px;
+    padding:4px;
+    width:auto;
+    margin:0;
+    transition:color .2s ease;
+}
+
+.password-wrap .toggle-pass:hover{
+    color:var(--teal);
+}
+
+/* PASSWORD STRENGTH — ticket-punch holes */
+.pass-strength{
+    display:flex;
+    gap:7px;
+    margin-top:10px;
+}
+
+.pass-strength span{
+    flex:1;
+    height:9px;
+    border-radius:50%;
+    background:var(--paper-deep);
+    box-shadow:inset 0 1px 2px rgba(15,23,42,.12);
+    transition:background .35s var(--ease);
+}
+
+#strengthLabel{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--slate);
+    margin-top:7px;
+    letter-spacing:.02em;
+}
+
+/*==================================================
+    ID TILES — profile & CNIC photo, styled like a
+    clipped photo on an intake card
+==================================================*/
+
+.media-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+}
+
+.photo-upload{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:14px;
+    border:1.5px dashed #b7c4de;
+    border-radius:14px;
+    background:var(--paper);
+    transition:border-color .2s var(--ease),background .2s var(--ease);
+}
+
+.photo-upload::before{
+    content:'';
+    position:absolute;
+    top:-6px;
+    left:22px;
+    width:26px;
+    height:12px;
+    background:var(--brass-tint);
+    border:1px solid rgba(56,189,248,.35);
+    transform:rotate(-4deg);
+}
+
+.photo-upload:hover{
+    border-color:var(--teal);
+    background:var(--teal-tint);
+}
+
+.photo-upload input[type="file"]{
+    display:none;
+}
+
+.photo-preview-circle{
+    width:54px;
+    height:54px;
+    border-radius:10px;
+    background:#e2e8f0;
+    flex-shrink:0;
+    border:2px solid #fff;
+    box-shadow:0 3px 10px rgba(15,23,42,.1);
+    object-fit:cover;
+}
+
+.photo-upload-text{
+    flex:1;
+    min-width:0;
+}
+
+.photo-upload-text strong{
+    display:block;
+    font-size:13.5px;
+    color:var(--ink);
+    margin-bottom:2px;
+}
+
+.photo-upload-text span{
+    font-size:12px;
+    color:var(--slate);
+}
+
+.photo-browse-btn{
+    background:#fff;
+    border:1.5px solid var(--line);
+    color:var(--ink);
+    padding:8px 14px;
+    border-radius:9px;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+    transition:border-color .2s var(--ease),color .2s var(--ease),transform .2s var(--ease);
+    white-space:nowrap;
+    flex-shrink:0;
+}
+
+.photo-browse-btn:hover{
+    border-color:var(--teal);
+    color:var(--teal-deep);
+    transform:translateY(-1px);
+}
+
+/* SELECT */
+.input-group select{
+    appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2364748b' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 16px center;
+    cursor:pointer;
+    padding-right:38px;
+}
+
+/* PRIVACY PILLS (kept for reuse elsewhere) */
+.privacy-pills{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.privacy-pill{
+    position:relative;
+}
+
+.privacy-pill input{
+    position:absolute;
+    opacity:0;
+    inset:0;
+    cursor:pointer;
+    margin:0;
+}
+
+.privacy-pill label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 14px;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color .2s var(--ease),background .2s var(--ease),color .2s var(--ease);
+    margin:0;
+}
+
+.privacy-pill input:checked + label{
+    border-color:var(--teal);
+    background:var(--teal-tint);
+    color:var(--teal-deep);
+}
+
+/*==================================================
+    RECAPTCHA WRAP
+==================================================*/
+.input-group .g-recaptcha{
+    transform-origin:0 0;
+}
+
+/*==================================================
+    SUBMIT — the intake stamp
+==================================================*/
+
+button[type="submit"]{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--teal),var(--teal-deep));
+    color:#fff;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:15.5px;
+    font-weight:700;
+    letter-spacing:.01em;
+    cursor:pointer;
+    transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+    margin-top:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    box-shadow:0 12px 26px -8px rgba(37,99,235,.45);
+}
+
+button[type="submit"]:hover{
+    transform:translateY(-2px);
+    box-shadow:0 18px 34px -10px rgba(37,99,235,.5);
+}
+
+button[type="submit"]:active{
+    transform:translateY(0);
+}
+
+.login-link{
+    text-align:center;
+    font-size:13.5px;
+    color:var(--slate);
+    margin-top:20px;
+}
+
+.login-link a{
+    color:var(--teal-deep);
+    font-weight:600;
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    transition:border-color .2s ease;
+}
+
+.login-link a:hover{
+    border-color:var(--teal-deep);
+}
+
+/* ALERT */
+.alert-danger{
+    background:var(--stamp-tint);
+    border:1px solid rgba(220,38,38,.3);
+    color:var(--stamp-deep);
+    padding:14px 16px;
+    border-radius:12px;
+    margin:26px 40px 0;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:13.5px;
+}
+
+.alert-danger i{
+    margin-top:2px;
+    flex-shrink:0;
 }
 
 .alert-danger ul{
-margin:0;
-padding-left:20px;
+    margin:0;
+    padding-left:18px;
 }
 
-.login-logo{
-    text-align:center;
-    margin-bottom:15px;
+.alert-danger li{
+    margin-bottom:2px;
 }
 
-.login-logo img{
-    width:100px;
-    height:100px;
-    border-radius:50%;
-    object-fit:cover;
+/* FIELD ERROR STATE */
+.input-wrap.field-error input,
+.input-wrap.field-error textarea,
+.input-wrap.field-error select{
+    border-color:var(--stamp);
+    box-shadow:0 0 0 4px var(--stamp-tint);
+}
+
+label.error{
+    color:var(--stamp);
+    font-size:12.5px;
+    font-weight:500;
+    margin-top:6px;
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+}
+
+/* MOBILE */
+@media (max-width:768px){
+    .ticket-head{
+        padding:28px 24px 26px;
+    }
+
+    .ticket-body{
+        padding:6px 24px 32px;
+    }
+
+    .alert-danger{
+        margin:22px 24px 0;
+    }
+
+    .ticket-head h2{
+        font-size:1.55rem;
+    }
+
+    .form-row,
+    .privacy-pills{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .privacy-pills{
+        gap:10px;
+    }
+}
+
+
+/*==================================================
+    DARK MODE — "night desk": lamp-lit ledger counter,
+    in blue tones
+==================================================*/
+
+body.dark{
+    background:
+        radial-gradient(circle at 12% 8%,rgba(59,130,246,0.12),transparent 45%),
+        radial-gradient(circle at 88% 92%,rgba(56,189,248,0.08),transparent 45%),
+        #0A0F1C;
+    color:#E7ECF7;
+}
+
+body.dark::before{
+    background-image:repeating-linear-gradient(180deg,rgba(255,255,255,0.015) 0px,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 34px);
+}
+
+body.dark{
+    --paper:#111827;
+    --paper-deep:#1A2438;
+    --card:#0F1729;
+    --ink:#EAF0FB;
+    --slate:#9AA9C9;
+    --line:#2C3B57;
+
+    --teal:#3B82F6;
+    --teal-deep:#2563EB;
+    --teal-tint:rgba(59,130,246,.16);
+
+    --brass:#38BDF8;
+    --brass-deep:#7DD3FC;
+    --brass-tint:rgba(56,189,248,.14);
+
+    --stamp:#F2685F;
+    --stamp-deep:#F5948A;
+    --stamp-tint:rgba(242,104,95,.14);
+}
+
+body.dark .register-form{
+    border-color:rgba(255,255,255,.06);
+    box-shadow:
+        0 1px 0 rgba(255,255,255,0.03) inset,
+        0 22px 50px -18px rgba(0,0,0,.55);
+}
+
+body.dark .ticket-head::after{
+    background-image:radial-gradient(circle at 10px 0,var(--card) 9px,transparent 9.5px);
+}
+
+body.dark .input-group input,
+body.dark .input-group textarea,
+body.dark .input-group select{
+    background:#0A0F1C;
+    border-color:var(--line);
+    color:var(--ink);
+}
+
+body.dark .input-group input::placeholder,
+body.dark .input-group textarea::placeholder{
+    color:#5c6980;
+}
+
+body.dark .input-group input:focus,
+body.dark .input-group textarea:focus,
+body.dark .input-group select:focus{
+    background:#0A0F1C;
+}
+
+body.dark .input-group select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239aa9c9' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+}
+
+body.dark .photo-upload{
+    background:#0A0F1C;
+    border-color:var(--line);
+}
+
+body.dark .photo-upload:hover{
+    border-color:var(--teal);
+    background:var(--teal-tint);
+}
+
+body.dark .photo-browse-btn{
+    background:#111827;
+    border-color:var(--line);
+    color:#cdd6ea;
+}
+
+body.dark .photo-browse-btn:hover{
+    border-color:var(--teal);
+    color:var(--teal);
+}
+
+body.dark .pass-strength span{
+    background:#0A0F1C;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,.4);
+}
+
+body.dark .login-link a{
+    color:var(--brass);
 }

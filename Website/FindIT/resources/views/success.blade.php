@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Successful</title>
 
-```
-<meta http-equiv="refresh" content="3;url=/Home">
 
+<meta http-equiv="refresh" content="3;url=/">
 <style>
     *{
         margin:0;
@@ -75,14 +74,12 @@
         font-weight:bold;
     }
 </style>
-```
 
 </head>
 <body>
 
 <div class="success-card">
 
-```
 <div class="check">✓</div>
 
 <h1>Registration Successful</h1>
@@ -96,7 +93,6 @@
     <span class="countdown" id="count">3</span>
     seconds...
 </p>
-```
 
 </div>
 

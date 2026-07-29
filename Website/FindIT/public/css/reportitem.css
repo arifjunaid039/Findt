@@ -1,156 +1,968 @@
+/*==================================================
+                GOOGLE FONT
+==================================================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/*==================================================
+                RESET
+==================================================*/
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-min-height:100vh;
-background:linear-gradient(135deg,#0d6efd,#6ea8fe);
-padding:40px 20px;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top left,#60a5fa 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#93c5fd 0%,transparent 35%),
+        linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+    background-attachment:fixed;
+    padding:35px 15px;
+    transition:background .3s ease;
 }
+
+/*==================================================
+                THEME TOGGLE BUTTON
+==================================================*/
+
+.theme-toggle-btn{
+    position:fixed;
+    top:18px;
+    right:18px;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:none;
+    background:rgba(255,255,255,.92);
+    color:#2563eb;
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+    z-index:1000;
+    backdrop-filter:blur(8px);
+    transition:.3s;
+}
+
+.theme-toggle-btn:hover{
+    transform:translateY(-2px) scale(1.05);
+    box-shadow:0 10px 24px rgba(0,0,0,.22);
+}
+
+.theme-toggle-btn:active{
+    transform:translateY(0) scale(.96);
+}
+
+.theme-toggle-btn:focus-visible{
+    outline:2px solid #93c5fd;
+    outline-offset:3px;
+}
+
+body.dark .theme-toggle-btn{
+    background:rgba(30,41,59,.92);
+    color:#facc15;
+    box-shadow:0 8px 20px rgba(0,0,0,.4);
+}
+
+/*==================================================
+                FIELD VALIDATION
+==================================================*/
+
+.form-group.field-error input,
+.form-group.field-error select,
+.form-group.field-error textarea{
+    border-color:#ef4444 !important;
+    box-shadow:0 0 0 4px rgba(239,68,68,.14);
+}
+
+.field-error-msg{
+    display:block;
+    color:#ef4444;
+    font-size:13px;
+    margin-top:6px;
+    font-weight:500;
+}
+
+.upload-box.field-error{
+    border-color:#ef4444;
+}
+
+.type-select-group.field-error .type-card-inner{
+    outline:2px solid #ef4444;
+}
+
+.alert-danger.js-alert{
+    display:none;
+}
+
+body.dark .field-error-msg{
+    color:#fca5a5;
+}
+
+body.dark .form-group.field-error input,
+body.dark .form-group.field-error select,
+body.dark .form-group.field-error textarea{
+    border-color:#f87171 !important;
+    box-shadow:0 0 0 4px rgba(248,113,113,.16);
+}
+
+/*==================================================
+                THEME COLORS
+==================================================*/
 
 .report-form{
-max-width:900px;
-margin:40px auto;
-background:rgba(255,255,255,0.97);
-backdrop-filter:blur(10px);
-padding:45px;
-border-radius:20px;
-box-shadow:0 20px 50px rgba(0,0,0,0.15);
-transition:.3s ease;
+    --accent:#2563eb;
+    --accent-dark:#1d4ed8;
+    --accent-light:rgba(37,99,235,.12);
 }
 
-.report-form:hover{
-transform:translateY(-3px);
+.report-form.theme-lost{
+    --accent:#ef4444;
+    --accent-dark:#dc2626;
+    --accent-light:rgba(239,68,68,.14);
+}
+
+.report-form.theme-found{
+    --accent:#16a34a;
+    --accent-dark:#15803d;
+    --accent-light:rgba(22,163,74,.14);
+}
+
+/*==================================================
+                MAIN FORM
+==================================================*/
+
+.report-form{
+    width:95%;
+    max-width:950px;
+    margin:auto;
+
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border-radius:28px;
+    padding:45px;
+
+    border:1px solid rgba(255,255,255,.4);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.15),
+        inset 0 1px rgba(255,255,255,.6);
+
+    animation:fadeUp .5s ease;
+}
+
+/*==================================================
+                HEADER
+==================================================*/
+
+.form-header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.form-icon{
+    width:80px;
+    height:80px;
+
+    margin:auto auto 18px;
+
+    border-radius:22px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+
+    color:#fff;
+    font-size:32px;
+
+    box-shadow:
+        0 12px 30px var(--accent-light);
+
+    transition:.35s;
+}
+
+.form-icon:hover{
+    transform:rotate(-8deg) scale(1.06);
 }
 
 .report-form h2{
-text-align:center;
-color:#0d6efd;
-font-size:32px;
-margin-bottom:10px;
+    font-size:34px;
+    font-weight:700;
+    color:#0f172a;
+    margin-bottom:10px;
 }
 
 .report-form p{
-text-align:center;
-color:#666;
-margin-bottom:35px;
+    color:#64748b;
+    font-size:15px;
+    line-height:1.7;
 }
+
+/*==================================================
+                LOST FOUND CARD
+==================================================*/
+
+.type-select-group{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+    margin-bottom:35px;
+}
+
+.type-card{
+    position:relative;
+}
+
+.type-card input{
+    position:absolute;
+    opacity:0;
+}
+
+.type-card-inner{
+    background:#fff;
+
+    border:2px solid #e2e8f0;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    font-weight:600;
+    color:#475569;
+}
+
+.type-card-inner i{
+    font-size:22px;
+}
+
+.type-card-inner:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 30px rgba(0,0,0,.08);
+}
+
+.type-card input:checked + .lost-card{
+    border-color:#ef4444;
+    color:#dc2626;
+    background:#fff5f5;
+}
+
+.type-card input:checked + .found-card{
+    border-color:#16a34a;
+    color:#15803d;
+    background:#f0fdf4;
+}
+
+/*==================================================
+                ROWS
+==================================================*/
 
 .form-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
 }
 
+/*==================================================
+                FORM GROUP
+==================================================*/
+
 .form-group{
-margin-bottom:20px;
+    margin-bottom:22px;
 }
 
 .form-group label{
-display:block;
-margin-bottom:8px;
-font-weight:600;
-color:#333;
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    margin-bottom:10px;
+
+    font-size:14px;
+    font-weight:600;
+    color:#1e293b;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea{
-width:100%;
-padding:14px 16px;
-border:2px solid #e9ecef;
-border-radius:12px;
-font-size:15px;
-transition:.3s;
-background:#fff;
-}
-
-.form-group textarea{
-resize:vertical;
-min-height:120px;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-outline:none;
-border-color:#0d6efd;
-box-shadow:0 0 0 4px rgba(13,110,253,0.15);
-}
-
-input[type="file"]{
-padding:10px;
-background:#f8f9fa;
-}
-
-.report-form button{
-width:100%;
-padding:15px;
-border:none;
-border-radius:12px;
-background:#0d6efd;
-color:white;
-font-size:17px;
-font-weight:600;
-cursor:pointer;
-transition:.3s;
-margin-top:10px;
-}
-
-.report-form button:hover{
-background:#0b5ed7;
-transform:translateY(-2px);
-}
-
-.report-form button:active{
-transform:translateY(0);
+.form-group label i{
+    color:var(--accent);
+    font-size:15px;
 }
 
 .required{
-color:red;
+    color:#ef4444;
 }
 
-@media(max-width:768px){
-
-
-.report-form{
-    padding:25px;
+.optional{
+    font-size:12px;
+    color:#94a3b8;
+    font-weight:400;
 }
 
-.form-row{
-    grid-template-columns:1fr;
+/*==================================================
+                INPUTS
+==================================================*/
+
+.form-group input[type=text],
+.form-group input[type=date],
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:14px;
+
+    border:2px solid #e2e8f0;
+
+    background:#fff;
+
+    font-size:15px;
+
+    color:#0f172a;
+
+    transition:.30s;
 }
 
-.report-form h2{
-    font-size:26px;
+.form-group textarea{
+    min-height:130px;
+    resize:vertical;
 }
+
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+    color:#94a3b8;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+
+    outline:none;
+
+    border-color:var(--accent);
+
+    box-shadow:
+        0 0 0 5px var(--accent-light);
+
+    transform:translateY(-2px);
+}
+
+.form-group select{
+
+    appearance:none;
+
+    padding-right:45px;
+
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%2364748b' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+
+    background-repeat:no-repeat;
+
+    background-position:right 15px center;
+}
+
+/*==================================================
+                UPLOAD
+==================================================*/
+
+.upload-box{
+
+    position:relative;
+
+    min-height:190px;
+
+    border-radius:18px;
+
+    border:2px dashed #cbd5e1;
+
+    background:#f8fafc;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    transition:.35s;
+}
+
+.upload-box:hover{
+
+    border-color:var(--accent);
+
+    background:var(--accent-light);
+}
+
+.upload-box input[type=file]{
+
+    position:absolute;
+    inset:0;
+
+    opacity:0;
+
+    cursor:pointer;
+}
+
+.upload-placeholder{
+
+    text-align:center;
+
+    color:#64748b;
+
+    pointer-events:none;
+}
+
+.upload-placeholder i{
+
+    display:block;
+
+    font-size:42px;
+
+    color:var(--accent);
+
+    margin-bottom:12px;
+}
+
+.upload-placeholder p{
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:#334155;
+}
+
+.upload-placeholder span{
+
+    display:block;
+
+    margin-top:8px;
+
+    color:#94a3b8;
+
+    font-size:13px;
+}
+
+.photo-preview{
+
+    max-width:100%;
+
+    max-height:240px;
+
+    object-fit:contain;
+
+    border-radius:12px;
+}
+
+/*==================================================
+                ANIMATION
+==================================================*/
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
 
 }
 
-.form-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
+/*==================================================
+                BUTTON
+==================================================*/
+
+.report-form button{
+
+    width:100%;
+
+    margin-top:12px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+    letter-spacing:.3px;
+
+    transition:.35s;
+
+    box-shadow:
+        0 12px 28px var(--accent-light);
+}
+
+.report-form button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 18px 35px var(--accent-light);
+}
+
+.report-form button:active{
+
+    transform:scale(.98);
+}
+
+.report-form button i{
+
+    font-size:17px;
+}
+
+/*==================================================
+            ITEM NAME + BRAND SECTION
+==================================================*/
+
+#nameBrandSection{
+
+    display:none;
+
+    gap:22px;
+
+    margin-bottom:10px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:#f8fafc;
+
+    border:2px solid #e2e8f0;
+
+    animation:fadeScale .35s ease;
+}
+
+#nameBrandSection .form-group{
+
+    margin-bottom:0;
+
+    flex:1;
+}
+
+/*==================================================
+            DYNAMIC FIELDS
+==================================================*/
+
+.dynamic-field{
+
+    display:none;
+
+    padding:18px;
+
+    margin-bottom:22px;
+
+    border-radius:18px;
+
+    background:#f8fafc;
+
+    border:2px solid #e2e8f0;
+
+    animation:fadeScale .3s ease;
+}
+
+/*==================================================
+                ALERTS
+==================================================*/
+
+.alert-success,
+.alert-danger{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+    padding:18px;
+
+    margin-bottom:25px;
+
+    border-radius:16px;
+
+    font-size:14px;
+}
+
+.alert-success{
+
+    background:#ecfdf5;
+
+    color:#166534;
+
+    border-left:6px solid #16a34a;
 }
 
 .alert-danger{
-background:#ffe5e5;
-color:#c62828;
-padding:15px;
-border-radius:10px;
-margin-bottom:20px;
+
+    background:#fef2f2;
+
+    color:#b91c1c;
+
+    border-left:6px solid #ef4444;
 }
 
 .alert-danger ul{
-margin:0;
-padding-left:20px;
+
+    padding-left:18px;
 }
 
-@media(max-width:768px){
-.form-row{
-grid-template-columns:1fr;
+/*==================================================
+                SCROLLBAR
+==================================================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
 }
+
+::-webkit-scrollbar-track{
+
+    background:#e2e8f0;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#94a3b8;
+
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#64748b;
+}
+
+/*==================================================
+                DARK MODE
+==================================================*/
+
+body.dark{
+
+    background:
+    linear-gradient(135deg,#020617,#0f172a,#1e293b);
+}
+
+body.dark .report-form{
+
+    background:rgba(15,23,42,.94);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:#fff;
+}
+
+body.dark .report-form h2{
+
+    color:#f8fafc;
+}
+
+body.dark .report-form p{
+
+    color:#cbd5e1;
+}
+
+body.dark .form-group label{
+
+    color:#f1f5f9;
+}
+
+body.dark
+.form-group input,
+body.dark
+.form-group textarea,
+body.dark
+.form-group select{
+
+    background:#1e293b;
+
+    color:#fff;
+
+    border-color:#334155;
+}
+
+body.dark
+.form-group input::placeholder,
+body.dark
+.form-group textarea::placeholder{
+
+    color:#94a3b8;
+}
+
+body.dark
+.type-card-inner{
+
+    background:#1e293b;
+
+    color:#f1f5f9;
+
+    border-color:#334155;
+}
+
+body.dark
+.upload-box{
+
+    background:#1e293b;
+
+    border-color:#334155;
+}
+
+body.dark
+.upload-placeholder p{
+
+    color:#f1f5f9;
+}
+
+body.dark
+.upload-placeholder{
+
+    color:#cbd5e1;
+}
+
+body.dark
+.dynamic-field{
+
+    background:#1e293b;
+
+    border-color:#334155;
+}
+
+body.dark
+#nameBrandSection{
+
+    background:#1e293b;
+
+    border-color:#334155;
+}
+
+body.dark .alert-success{
+    background:rgba(22,163,74,.14);
+    color:#4ade80;
+    border-left-color:#22c55e;
+}
+
+body.dark .alert-danger{
+    background:rgba(239,68,68,.14);
+    color:#fca5a5;
+    border-left-color:#ef4444;
+}
+
+body.dark .optional{
+    color:#64748b;
+}
+
+/*==================================================
+                RESPONSIVE
+==================================================*/
+
+@media(max-width:768px){
+
+    body{
+
+        padding:20px 10px;
+    }
+
+    .report-form{
+
+        width:100%;
+
+        padding:25px;
+
+        border-radius:20px;
+    }
+
+    .report-form h2{
+
+        font-size:27px;
+    }
+
+    .form-row{
+
+        grid-template-columns:1fr;
+    }
+
+    .type-select-group{
+
+        grid-template-columns:1fr;
+    }
+
+    #nameBrandSection{
+
+        display:block;
+    }
+
+    #nameBrandSection .form-group{
+
+        margin-bottom:18px;
+    }
+
+    .theme-toggle-btn{
+        top:12px;
+        right:12px;
+        width:40px;
+        height:40px;
+        font-size:16px;
+    }
+
+}
+
+/*==================================================
+                ANIMATIONS
+==================================================*/
+
+@keyframes fadeScale{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.95) translateY(12px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1) translateY(0);
+    }
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+    }
+
+    50%{
+
+        transform:scale(1.03);
+    }
+
+    100%{
+
+        transform:scale(1);
+    }
+
+}
+
+.report-form:hover{
+
+    animation:pulse .5s ease;
+}
+
+/* Upload box ko position context banao aur content center karo */
+.upload-box{
+    position:relative;
+    min-height:190px;
+    border-radius:18px;
+    border:2px dashed #cbd5e1;
+    background:#f8fafc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    transition:.35s;
+}
+
+.upload-box.dragover{
+    border-color:var(--accent);
+    background:var(--accent-light);
+}
+
+.upload-box input[type=file]{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    cursor:pointer;
+    z-index:1;
+}
+
+/* Image ko box ke center mein rakho, full width mat lene do */
+.photo-preview{
+    display:none;
+    max-width:90%;
+    max-height:220px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:12px;
+    position:relative;
+    z-index:2;
+    pointer-events:none;
+    margin:auto;
+}
+
+/* Remove button ko generic .report-form button se BACHAO */
+.report-form button#findit-remove-photo{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:32px;
+    height:32px;
+    min-height:0;
+    padding:0;
+    margin:0;
+    border:none;
+    border-radius:50%;
+    background:rgba(15,23,42,.75);
+    box-shadow:none;
+    color:#fff;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:13px;
+    z-index:3;
+    transform:none !important;
+}
+
+.report-form button#findit-remove-photo:hover{
+    background:#ef4444;
+    transform:none !important;
+    box-shadow:none;
 }

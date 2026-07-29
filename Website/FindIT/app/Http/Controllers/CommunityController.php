@@ -3,33 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Community;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class CommunityController extends Controller
 {
-    // Show all communities
-    public function index()
+    /**
+     * Display a paginated listing of communities.
+     */
+    public function index(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
+        $query = Community::approved()
+            ->with(['members', 'items'])
+            ->withCount(['members', 'items']);
+
+        // Filter by location
+        if ($request->filled('location')) {
+            $query->where('location', $request->location);
         }
 
-        $communities = Community::all();
-        return view('communities', compact('communities'));
+        $communities = $query->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        // Get unique locations for dropdown (only from approved communities)
+        $locations = Community::approved()
+            ->whereNotNull('location')
+            ->where('location', '!=', '')
+            ->distinct()
+            ->orderBy('location')
+            ->pluck('location');
+
+        return view('communities', compact('communities', 'locations'));
     }
 
-    // Join a community
-    public function join($id)
+    /**
+     * Join a community.
+     */
+    public function join($id): RedirectResponse
     {
-        if (!Auth::check()) {
-            return redirect('/login');
+        $community = Community::findOrFail($id);
+        $user = auth()->user();
+
+        if ($community->members()->where('user_id', $user->id)->exists()) {
+            return back()->with('info', 'You are already a member of this community.');
         }
 
-        $user = Auth::user();
+        $community->members()->create(['user_id' => $user->id]);
 
-        $user->communities()->syncWithoutDetaching([$id]);
+        return back()->with('success', "You joined {$community->name}. You can now claim items reported in this community.");
+    }
 
-        return back()->with('success', 'Joined successfully!');
+    /**
+     * Leave a community.
+     */
+    public function leave($id): RedirectResponse
+    {
+        $community = Community::findOrFail($id);
+        $community->members()->where('user_id', auth()->id())->delete();
+
+        return back()->with('success', "You left {$community->name}.");
     }
 }

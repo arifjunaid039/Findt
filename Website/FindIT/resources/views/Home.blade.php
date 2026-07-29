@@ -4,85 +4,60 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>FindIT | Home</title>
         <link rel="icon" type="image/png" href="{{ asset('img/Logo.jpeg') }}">
-        <link rel="stylesheet" href="{{ asset('css/Hero.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/About.css') }}">
         <link rel="stylesheet" href="{{ asset('css/howitworks.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/Find.css') }}">
-
     </head>
 
     <body>
 
     @include('nav') 
 
-    <section class="hero">
+    <section class="about-hero">
+
         <div class="hero-content">
 
+            <span class="about-eyebrow">
+                <i class="fa-solid fa-location-dot"></i>
+                Pakistan's Smart Lost & Found Platform
+            </span>
+
             <h1>
-                Lost Something?
-                <span>Find It With FindIT</span>
+                Reconnecting People With
+                <span>The Things They Value.</span>
             </h1>
 
             <p>
-                Report lost items and help others recover their belongings.
+                FindIT provides a secure and intelligent platform where people
+                can report lost belongings, upload found items, search listings,
+                communicate safely, and recover valuable possessions faster than
+                ever before.
             </p>
 
             <div class="hero-buttons">
-            <a href="{{ url('/Report') }}" class="cta-secondary">Report Item</a>
+
+                <a href="{{ url('/Report') }}" class="hero-btn primary-btn rep">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    Report Item
+                </a>
+
+                <a href="{{ url('/Founditems') }}" class="hero-btn secondary-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Browse Items
+                </a>
+
             </div>
 
         </div>
+
     </section>
 
     @include('howitworks') 
 
     <br>
+    
+    @include('Find', ['items' => $lostItems, 'sectionTitle' => 'Recently Lost', 'gridId' => 'lostItemsGrid'])
 
-<section class="recent-items">
-
-    <div class="section-header">
-        <h2>Recent Lost & Found Items</h2>
-    </div>
-
-    <div class="items-grid">
-
-        @forelse($items as $item)
-
-        <div class="item-card">
-
-            <!-- TYPE TAG -->
-            <div class="item-tag {{ $item->item_type }}">
-                {{ ucfirst($item->item_type) }}
-            </div>
-
-            <!-- IMAGE -->
-            @if(!empty($item->photo))
-                <img src="{{ asset('uploads/items/'.$item->photo) }}" class="item-img">
-            @else
-                <div class="item-placeholder">📦 No Image</div>
-            @endif
-
-            <!-- TITLE -->
-            <h3>{{ $item->title }}</h3>
-
-            <!-- LOCATION -->
-            <p class="location">📍 {{ $item->location }}</p>
-
-            <!-- TIME -->
-            <span class="time">
-                {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
-            </span>
-
-        </div>
-
-        @empty
-            <p style="grid-column:1/-1;text-align:center;color:#777;">
-                No items found yet.
-            </p>
-        @endforelse
-
-    </div>
-
-</section>  
+    @include('Find', ['items' => $foundItems, 'sectionTitle' => 'Recently Found', 'gridId' => 'foundItemsGrid'])
 
     @include('categories') 
 
@@ -103,5 +78,9 @@
         : '🌙';
     });
     </script>
+
+    <script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="pWqLqk5Y3XFJodIGm8Ue0";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
     </body>
     </html>

@@ -2,35 +2,65 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use Notifiable;
 
-    protected function casts(): array
+    protected $fillable = [
+        'fullname', 'email', 'phone', 'cnic', 'address',
+        'photo', 'password', 'status', 'role',
+    ];
+
+    protected $hidden = [
+        'password',
+    ];
+
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
+    // Items posted by this user
+    public function items()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Item::class, 'user_id');
     }
 
-    // Relationship with communities
-    public function communities()
+    // Claims this user has made on other people's items
+    public function claims()
     {
-        return $this->belongsToMany(
-            Community::class,
-            'community_members',
-            'user_id',
-            'community_id'
-        );
+        return $this->hasMany(Claim::class, 'claimant_id');
     }
+
+    // Reports this user has filed
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
+    }
+
+    // Communities this user has joined
+    public function communityMemberships()
+    {
+        return $this->hasMany(CommunityMember::class, 'user_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    // app/Models/User.php
+public function communities()
+{
+    return $this->hasManyThrough(
+        Community::class,
+        CommunityMember::class,
+        'user_id',
+        'id',
+        'id',
+        'community_id'
+    );
+}
 }

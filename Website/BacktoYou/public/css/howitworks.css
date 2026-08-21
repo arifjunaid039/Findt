@@ -1,0 +1,558 @@
+/*==================================================
+                GOOGLE FONTS
+==================================================*/
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --primary-light:#eff6ff;
+
+    --text:#0f172a;
+    --text-light:#64748b;
+
+    --card:#ffffff;
+    --bg:#f8fafc;
+    --border:#e2e8f0;
+
+    --radius:22px;
+
+    --shadow:
+        0 10px 30px rgba(15,23,42,.06);
+
+    --shadow-hover:
+        0 25px 60px rgba(37,99,235,.18);
+
+    --transition:.35s cubic-bezier(.4,0,.2,1);
+}
+
+/*==================================================
+                SECTION
+==================================================*/
+
+.how-it-works{
+
+    width:min(1200px,92%);
+    margin:110px auto;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    text-align:center;
+
+}
+
+.section-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 18px;
+    background:#dbeafe;
+    color:#2563eb;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.how-it-works h2{
+
+    font-family:'Syne',sans-serif;
+    font-size:42px;
+    font-weight:800;
+    color:var(--text);
+    margin-bottom:15px;
+    letter-spacing:-1px;
+
+}
+
+.how-it-works .section-text{
+
+    max-width:620px;
+    margin:auto;
+    margin-bottom:65px;
+
+    color:var(--text-light);
+
+    line-height:1.8;
+    font-size:16px;
+
+}
+
+/*==================================================
+                GRID
+==================================================*/
+
+.steps{
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:35px;
+
+}
+
+/*==================================================
+                CARD
+==================================================*/
+
+.step{
+
+    position:relative;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+
+    transition:all var(--transition);
+
+    box-shadow:var(--shadow);
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+.step::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:5px;
+
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #60a5fa
+    );
+
+    transform:scaleX(0);
+    transform-origin:left;
+
+    transition:.4s;
+
+}
+
+.step:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:var(--shadow-hover);
+
+    border-color:#bfdbfe;
+
+}
+
+.step:hover::before{
+
+    transform:scaleX(1);
+
+}
+
+/*==================================================
+                STEP NUMBER
+==================================================*/
+
+.step-number{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:#2563eb;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:14px;
+    z-index:20;
+    box-shadow:0 10px 25px rgba(37,99,235,.35);
+}
+
+/*==================================================
+                IMAGE
+==================================================*/
+
+.step-image-box{
+
+    position:relative;
+
+    height:220px;
+
+    overflow:hidden;
+
+}
+
+.step-image-box img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:transform .7s ease;
+
+}
+
+.step:hover img{
+
+    transform:scale(1.08);
+
+}
+
+.image-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to top,
+        rgba(15,23,42,.45),
+        rgba(15,23,42,0)
+    );
+}
+
+/*==================================================
+                CONTENT
+==================================================*/
+
+.step-content{
+
+    position:relative;
+    z-index:2;
+
+    padding:30px;
+
+    display:flex;
+    flex-direction:column;
+
+    flex:1;
+
+    text-align:left;
+
+}
+
+/*==================================================
+                ICON
+==================================================*/
+
+.step-icon{
+
+    width:58px;
+    height:58px;
+
+    border-radius:16px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:22px;
+
+    color:#2563eb;
+
+    background:linear-gradient(
+        135deg,
+        #dbeafe,
+        #eff6ff
+    );
+
+    margin-bottom:22px;
+
+    transition:.35s;
+
+}
+
+.step:hover .step-icon{
+
+    background:#2563eb;
+    color:#fff;
+    transform:rotate(-8deg);
+
+}
+
+/*==================================================
+                TITLE
+==================================================*/
+
+.step-content h3{
+
+    font-family:'Syne',sans-serif;
+
+    font-size:23px;
+
+    color:var(--text);
+
+    margin-bottom:12px;
+
+}
+
+/*==================================================
+                TEXT
+==================================================*/
+
+.step-content p{
+
+    color:var(--text-light);
+
+    line-height:1.8;
+
+    font-size:15px;
+
+    margin-bottom:28px;
+
+    flex:1;
+
+}
+
+/*==================================================
+                BUTTON
+==================================================*/
+
+.step-content a{
+
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    align-self:flex-start;
+
+    padding:13px 24px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:#fff;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.step-content a:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 28px rgba(37,99,235,.30);
+
+}
+
+.step-content a i{
+    transition:.3s;
+}
+
+.step-content a:hover i{
+    transform:translateX(4px);
+}
+
+/*==================================================
+                DARK MODE
+==================================================*/
+
+[data-bs-theme="dark"] .step,
+body.dark .step{
+
+    background:#162233;
+
+    border-color:#2d3b4e;
+
+}
+
+[data-bs-theme="dark"] .step-content h3,
+body.dark .step-content h3{
+
+    color:#fff;
+
+}
+
+[data-bs-theme="dark"] .step-content p,
+body.dark .step-content p{
+
+    color:#cbd5e1;
+
+}
+
+[data-bs-theme="dark"] .how-it-works h2,
+body.dark .how-it-works h2{
+
+    color:#fff;
+
+}
+
+[data-bs-theme="dark"] .how-it-works .section-text,
+body.dark .how-it-works .section-text{
+
+    color:#94a3b8;
+
+}
+
+[data-bs-theme="dark"] .step-icon,
+body.dark .step-icon{
+
+    background:#223248;
+
+}
+
+/*==================================================
+                RESPONSIVE
+==================================================*/
+
+@media(max-width:992px){
+
+    .how-it-works{
+        margin:90px auto;
+    }
+
+    .steps{
+
+        grid-template-columns:repeat(2,1fr);
+        gap:28px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .how-it-works{
+
+        margin:70px auto;
+
+    }
+
+    .how-it-works h2{
+
+        font-size:32px;
+
+    }
+
+    .how-it-works .section-text{
+        margin-bottom:48px;
+        font-size:15px;
+    }
+
+    .step-image-box{
+        height:200px;
+    }
+
+    .step-content{
+        padding:24px;
+    }
+}
+
+@media(max-width:576px){
+
+    .how-it-works{
+        width:94%;
+        margin:56px auto;
+    }
+
+    .steps{
+
+        grid-template-columns:1fr;
+        gap:22px;
+
+    }
+
+    .section-badge{
+        padding:7px 14px;
+        font-size:12px;
+    }
+
+    .step-image-box{
+
+        height:190px;
+
+    }
+
+    .how-it-works h2{
+
+        font-size:26px;
+        letter-spacing:-.5px;
+
+    }
+
+    .how-it-works .section-text{
+        margin-bottom:36px;
+        line-height:1.7;
+    }
+
+    .step-number{
+        width:38px;
+        height:38px;
+        font-size:12.5px;
+        top:14px;
+        right:14px;
+    }
+
+    .step-content{
+        padding:22px 20px;
+    }
+
+    .step-icon{
+        width:50px;
+        height:50px;
+        border-radius:14px;
+        font-size:19px;
+        margin-bottom:18px;
+    }
+
+    .step-content h3{
+        font-size:20px;
+        margin-bottom:10px;
+    }
+
+    .step-content p{
+        font-size:14px;
+        line-height:1.7;
+        margin-bottom:22px;
+    }
+
+    .step-content a{
+        width:100%;
+        justify-content:center;
+        padding:13px 20px;
+    }
+
+    /* hover-only interactions don't apply on touch; keep cards flat & avoid
+       stuck :hover states after a tap on mobile browsers */
+    .step:hover{
+        transform:none;
+    }
+}
+
+@media(max-width:400px){
+
+    .how-it-works h2{
+        font-size:23px;
+    }
+
+    .step-image-box{
+        height:170px;
+    }
+
+    .step-content{
+        padding:18px 16px;
+    }
+}

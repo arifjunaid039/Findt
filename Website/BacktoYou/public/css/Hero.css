@@ -1,0 +1,332 @@
+/*==================================================
+            GOOGLE FONT
+==================================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+.hero{
+    position:relative;
+    min-height:70vh;
+    width:95%;
+    margin:20px auto;
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    text-align:center;
+    padding:60px 20px;
+    border-radius:24px;
+    overflow:hidden;
+    font-family:'Poppins','Segoe UI',sans-serif;
+    box-shadow:
+        0 20px 45px rgba(37,99,235,.25),
+        0 6px 16px rgba(0,0,0,.08);
+}
+
+/* Decorative glow blobs — purely cosmetic, sit behind content */
+.hero-glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    pointer-events:none;
+    z-index:0;
+}
+
+.hero-glow-1{
+    width:340px;
+    height:340px;
+    background:rgba(250,204,21,.35);
+    top:-100px;
+    left:-80px;
+}
+
+.hero-glow-2{
+    width:300px;
+    height:300px;
+    background:rgba(255,255,255,.15);
+    bottom:-120px;
+    right:-60px;
+}
+
+.hero-content{
+    position:relative;
+    z-index:1;
+    max-width:760px;
+}
+
+/* BADGE */
+.hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.25);
+    backdrop-filter:blur(6px);
+    color:#fff;
+    padding:8px 18px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:22px;
+    text-align:left;
+}
+
+.hero-badge i{
+    color:#facc15;
+    font-size:13px;
+    flex-shrink:0;
+}
+
+.hero h1{
+    font-size:clamp(2.2rem,5vw,3.6rem);
+    line-height:1.2;
+    margin-bottom:18px;
+    font-weight:700;
+}
+
+.hero h1 span{
+    display:block;
+    color:#facc15;
+    margin-top:6px;
+}
+
+.hero p{
+    font-size:1.15rem;
+    line-height:1.7;
+    color:rgba(255,255,255,.9);
+    max-width:520px;
+    margin:0 auto 34px;
+}
+
+/* SEARCH BOX (kept for pages that use it) */
+.search-box{
+    display:flex;
+    max-width:600px;
+    margin:0 auto 30px;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.search-box input{
+    flex:1;
+    min-width:0;
+    border:none;
+    padding:15px 18px;
+    font-size:16px;
+    outline:none;
+    color:#111827;
+}
+
+.search-box button{
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    padding:15px 25px;
+    cursor:pointer;
+    font-weight:600;
+    flex-shrink:0;
+    transition:.25s;
+}
+
+.search-box button:hover{
+    background:#1d4ed8;
+}
+
+/* BUTTONS */
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.btn-primary,
+.cta-secondary{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:15px 28px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:700;
+    font-size:15px;
+    transition:.25s;
+}
+
+.btn-primary{
+    background:#facc15;
+    color:#111827;
+    box-shadow:0 10px 24px rgba(250,204,21,.35);
+}
+
+.cta-secondary{
+    background:#fff;
+    color:#2563eb;
+    box-shadow:0 10px 24px rgba(0,0,0,.12);
+}
+
+.btn-primary:hover,
+.cta-secondary:hover{
+    transform:translateY(-3px);
+}
+
+.btn-primary:hover{
+    box-shadow:0 14px 30px rgba(250,204,21,.45);
+}
+
+.cta-secondary:hover{
+    box-shadow:0 14px 30px rgba(0,0,0,.18);
+}
+
+.btn-primary:active,
+.cta-secondary:active{
+    transform:translateY(-1px);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+    .hero{
+        min-height:auto;
+        width:94%;
+        margin:16px auto;
+        padding:52px 24px;
+    }
+
+    .hero-glow-1{
+        width:220px;
+        height:220px;
+        top:-70px;
+        left:-60px;
+    }
+
+    .hero-glow-2{
+        width:200px;
+        height:200px;
+        bottom:-80px;
+        right:-40px;
+    }
+
+    .hero p{
+        font-size:1.05rem;
+        margin-bottom:28px;
+    }
+}
+
+@media(max-width:600px){
+    .hero{
+        min-height:auto;
+        padding:44px 18px;
+        border-radius:18px;
+    }
+
+    .hero-badge{
+        font-size:12px;
+        padding:7px 14px;
+        margin-bottom:18px;
+    }
+
+    .hero h1{
+        margin-bottom:14px;
+    }
+
+    .hero p{
+        font-size:.98rem;
+        line-height:1.6;
+        margin-bottom:26px;
+    }
+
+    .search-box{
+        flex-direction:column;
+        border-radius:12px;
+    }
+
+    .search-box input{
+        padding:13px 16px;
+        text-align:center;
+    }
+
+    .search-box button{
+        padding:13px 16px;
+        width:100%;
+        justify-content:center;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:stretch;
+        gap:12px;
+    }
+
+    .btn-primary,
+    .cta-secondary{
+        justify-content:center;
+        width:100%;
+        padding:14px 22px;
+    }
+}
+
+@media(max-width:400px){
+    .hero{
+        padding:36px 14px;
+        border-radius:16px;
+    }
+
+    .hero-badge{
+        font-size:11.5px;
+        padding:6px 12px;
+        gap:6px;
+    }
+
+    .hero p{
+        font-size:.92rem;
+    }
+
+    .hero-glow-1{
+        width:170px;
+        height:170px;
+    }
+
+    .hero-glow-2{
+        width:150px;
+        height:150px;
+    }
+}
+
+
+/*==================================================
+            DARK MODE
+==================================================*/
+
+body.dark .hero{
+    background:linear-gradient(135deg,#1e3a8a,#312e81);
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.45),
+        0 6px 16px rgba(0,0,0,.25);
+}
+
+body.dark .hero-glow-1{
+    background:rgba(250,204,21,.25);
+}
+
+body.dark .hero-glow-2{
+    background:rgba(255,255,255,.08);
+}
+
+body.dark .hero-badge{
+    background:rgba(255,255,255,.08);
+    border-color:rgba(255,255,255,.15);
+}
+
+body.dark .search-box input{
+    background:#1e293b;
+    color:#f1f5f9;
+}
+
+body.dark .cta-secondary{
+    background:#1e293b;
+    color:#93c5fd;
+}
